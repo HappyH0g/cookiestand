@@ -5,67 +5,85 @@ function CookieStore(storeName, minCust, maxCust, avgCookiesSold) {
   this.minCust = minCust;
   this. maxCust = maxCust;
   this.avgCookiesSold = avgCookiesSold;
-  this.hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
+  this.hours = 15;
   this.totalCookies = [];
-  this.totalSales = [];
 }
 
-var pikeCookieStore = new CookieStore('1st and Pike', 23, 65, 6.3);
+
 
 CookieStore.prototype.custPerHour = function() {
   return Math.floor(Math.random() * (this.maxCust - this.minCust) + this. minCust);
 };
 //console.log(pikeCookieStore.custPerHour());
 CookieStore.prototype.perHourBought = function() {
-  for (var i = 0; i < this.hours.length; i++) {
+  for (var i = 0; i < this.hours; i++) {
     this.totalCookies.push(Math.floor(this.custPerHour() * this.avgCookiesSold));
   }
-  console.log('perHourBought', pikeCookieStore.totalCookies);
-};
-
-CookieStore.prototype.renderHeaderRow = function() {
-  var blankTableHeader = document.createElement('th');
-  var storeTable = document.getElementById('table_area');
-  var tableRow = document.createElement('tr');
-  var totalTableHeader = document.createElement('th');
-  var hourlyTableHeader;
-
-  tableRow.appendChild(blankTableHeader);
-
-  for (var i = 0; i < this.hours.length; i++) {
-    hourlyTableHeader = document.createElement('th');
-    hourlyTableHeader.textContent = this.hours[i];
-    tableRow.appendChild(hourlyTableHeader);
-  }
-  totalTableHeader.textContent = ('Total');
-  tableRow.appendChild(totalTableHeader);
-
-  storeTable.appendChild(tableRow);
 };
 
 CookieStore.prototype.toHtml = function() {
   var storeTable = document.getElementById('table_area');
   var tableRow = document.createElement('tr');
   var nameTableHeader = document.createElement('th');
+  var dailyTotalHeader = document.createElement('th');
   var totalTableData = document.createElement('th');
   var hourlyTableData;
 
   nameTableHeader.textContent = this.name;
   tableRow.appendChild(nameTableHeader);
+  dailyTotalHeader.textContent = 'Daily Location Total';
+  dailyTotalHeader.appendChild(tableRow);
+
 
   for (var i = 0; i < this.totalCookies.length; i++) {
     hourlyTableData = document.createElement('td');
     hourlyTableData.textContent = this.totalCookies[i];
     tableRow.appendChild(hourlyTableData);
   }
-  totalTableData.textcontent = 100;
+  totalTableData.textcontent = 0;
   tableRow.appendChild(totalTableData);
-
+  console.log(tableRow);
   storeTable.appendChild(tableRow);
 };
-console.log(pikeCookieStore.perHourBought());
-pikeCookieStore.renderHeaderRow();
-pikeCookieStore.toHtml();
+var pikeLocation = new CookieStore('1st and Pike', 23, 65, 6.3);
+var seaTacLocation = new CookieStore('SeaTac Airport', 3, 24, 1.2);
+var seattleCenterLocation = new CookieStore('Seattle Center', 11, 38, 3.7);
+var capitolHillLocation = new CookieStore('Capitol Hill', 20, 38, 2.3);
+var alkiLocation = new CookieStore('Alki', 2, 16, 4.6);
+
+
+function renderHeaderRow() {
+  var hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
+  var blankTableHeader = document.createElement('th');
+  var storeTable = document.getElementById('table_area');
+  var tableRow = document.createElement('tr');
+  var hourlyTableHeader;
+
+  tableRow.appendChild(blankTableHeader);
+
+  for (var i = 0; i < hours.length; i++) {
+    hourlyTableHeader = document.createElement('th');
+    hourlyTableHeader.textContent = hours[i];
+    tableRow.appendChild(hourlyTableHeader);
+  }
+  storeTable.appendChild(tableRow);
+};
+
+function renderFooterRow() {
+  var blankTableFooter = document.createElement('tr');
+  var storeTable = document.getElementById('table_area');
+  var tableRow = document.createElement('tr');
+
+  tableRow.appendChild(blankTableFooter);
+  //totalTableFooter.textContent = ('Total');
+  //tableRow.appendChild(totalTableFooter);
+  storeTable.appendChild(tableRow);
+
+}
+renderHeaderRow();
+pikeLocation.perHourBought();
+pikeLocation.toHtml();
+renderFooterRow();
 
 /*var firstCookieStoreLocation = {
   name: '1st and Pike',
