@@ -7,9 +7,8 @@ function CookieStore(storeName, minCust, maxCust, avgCookiesSold) {
   this.avgCookiesSold = avgCookiesSold;
   this.hours = 15;
   this.totalCookies = [];
+  this.dailyTotalSum = [];
 }
-
-
 
 CookieStore.prototype.custPerHour = function() {
   return Math.floor(Math.random() * (this.maxCust - this.minCust) + this. minCust);
@@ -21,24 +20,36 @@ CookieStore.prototype.perHourBought = function() {
   }
 };
 
+CookieStore.prototype.dailyTotalCount = function() {
+  for (var i = 0; i < this.totalCookies.length; i++) {
+    var total = 0;
+    total += this.totalCookies[i];
+    this.dailyTotalSum.push(total[i]);
+
+  }
+};
+
 CookieStore.prototype.toHtml = function() {
   var storeTable = document.getElementById('table_area');
   var tableRow = document.createElement('tr');
   var nameTableHeader = document.createElement('th');
-  var dailyTotalHeader = document.createElement('th');
   var totalTableData = document.createElement('th');
   var hourlyTableData;
+  var dailyTotalData;
 
   nameTableHeader.textContent = this.name;
   tableRow.appendChild(nameTableHeader);
-  dailyTotalHeader.textContent = 'Daily Location Total';
-  dailyTotalHeader.appendChild(tableRow);
-
 
   for (var i = 0; i < this.totalCookies.length; i++) {
     hourlyTableData = document.createElement('td');
     hourlyTableData.textContent = this.totalCookies[i];
     tableRow.appendChild(hourlyTableData);
+  }
+
+  for (var j = 0; j < this.totalCookies.length; j++) {
+    dailyTotalData = document.createElement('td');
+    dailyTotalData.textContent = this.dailyTotalSum[j];
+    tableRow.appendChild(dailyTotalData);
   }
   totalTableData.textcontent = 0;
   tableRow.appendChild(totalTableData);
@@ -57,6 +68,7 @@ function renderHeaderRow() {
   var blankTableHeader = document.createElement('th');
   var storeTable = document.getElementById('table_area');
   var tableRow = document.createElement('tr');
+  var dailyTotalHeader = document.createElement('th');
   var hourlyTableHeader;
 
   tableRow.appendChild(blankTableHeader);
@@ -66,7 +78,10 @@ function renderHeaderRow() {
     hourlyTableHeader.textContent = hours[i];
     tableRow.appendChild(hourlyTableHeader);
   }
+  dailyTotalHeader.textContent = 'Daily Location Total';
+  tableRow.appendChild(dailyTotalHeader);
   storeTable.appendChild(tableRow);
+
 };
 
 function renderFooterRow() {
@@ -81,8 +96,18 @@ function renderFooterRow() {
 
 }
 renderHeaderRow();
+
 pikeLocation.perHourBought();
 pikeLocation.toHtml();
+seaTacLocation.perHourBought();
+seaTacLocation.toHtml();
+seattleCenterLocation.perHourBought();
+seattleCenterLocation.toHtml();
+capitolHillLocation.perHourBought();
+capitolHillLocation.toHtml();
+alkiLocation.perHourBought();
+alkiLocation.toHtml();
+
 renderFooterRow();
 
 /*var firstCookieStoreLocation = {
