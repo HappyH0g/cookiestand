@@ -3,11 +3,11 @@
 function CookieStore(storeName, minCust, maxCust, avgCookiesSold) {
   this.name = storeName;
   this.minCust = minCust;
-  this. maxCust = maxCust;
+  this.maxCust = maxCust;
   this.avgCookiesSold = avgCookiesSold;
   this.hours = 15;
   this.totalCookies = [];
-  this.dailyTotalSum = [];
+  this.dailyTotalSum = 0;
 }
 
 CookieStore.prototype.custPerHour = function() {
@@ -21,21 +21,21 @@ CookieStore.prototype.perHourBought = function() {
 };
 
 CookieStore.prototype.dailyTotalCount = function() {
+  var total = 0;
   for (var i = 0; i < this.totalCookies.length; i++) {
-    var total = 0;
     total += this.totalCookies[i];
-    this.dailyTotalSum.push(total[i]);
-
   }
+  this.dailyTotalSum = total;
 };
 
 CookieStore.prototype.toHtml = function() {
+  this.perHourBought();
+  this.dailyTotalCount();
   var storeTable = document.getElementById('table_area');
   var tableRow = document.createElement('tr');
   var nameTableHeader = document.createElement('th');
   var totalTableData = document.createElement('th');
   var hourlyTableData;
-  var dailyTotalData;
 
   nameTableHeader.textContent = this.name;
   tableRow.appendChild(nameTableHeader);
@@ -46,14 +46,9 @@ CookieStore.prototype.toHtml = function() {
     tableRow.appendChild(hourlyTableData);
   }
 
-  for (var j = 0; j < this.totalCookies.length; j++) {
-    dailyTotalData = document.createElement('td');
-    dailyTotalData.textContent = this.dailyTotalSum[j];
-    tableRow.appendChild(dailyTotalData);
-  }
-  totalTableData.textcontent = 0;
+  totalTableData.textcontent = this.dailyTotalSum;
   tableRow.appendChild(totalTableData);
-  console.log(tableRow);
+  console.log(this.dailyTotalSum);
   storeTable.appendChild(tableRow);
 };
 var pikeLocation = new CookieStore('1st and Pike', 23, 65, 6.3);
@@ -97,15 +92,10 @@ function renderFooterRow() {
 }
 renderHeaderRow();
 
-pikeLocation.perHourBought();
 pikeLocation.toHtml();
-seaTacLocation.perHourBought();
 seaTacLocation.toHtml();
-seattleCenterLocation.perHourBought();
 seattleCenterLocation.toHtml();
-capitolHillLocation.perHourBought();
 capitolHillLocation.toHtml();
-alkiLocation.perHourBought();
 alkiLocation.toHtml();
 
 renderFooterRow();
