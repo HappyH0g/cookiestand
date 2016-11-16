@@ -34,7 +34,7 @@ CookieStore.prototype.toHtml = function() {
   var storeTable = document.getElementById('table_area');
   var tableRow = document.createElement('tr');
   var nameTableHeader = document.createElement('th');
-  var totalTableData = document.createElement('th');
+  var totalTableData = document.createElement('td');
   var hourlyTableData;
 
   nameTableHeader.textContent = this.name;
@@ -45,10 +45,10 @@ CookieStore.prototype.toHtml = function() {
     hourlyTableData.textContent = this.totalCookies[i];
     tableRow.appendChild(hourlyTableData);
   }
-
-  totalTableData.textcontent = this.dailyTotalSum;
-  tableRow.appendChild(totalTableData);
   console.log(this.dailyTotalSum);
+
+  totalTableData.textContent = this.dailyTotalSum;
+  tableRow.appendChild(totalTableData);
   storeTable.appendChild(tableRow);
 };
 var pikeLocation = new CookieStore('1st and Pike', 23, 65, 6.3);
@@ -73,7 +73,7 @@ function renderHeaderRow() {
     hourlyTableHeader.textContent = hours[i];
     tableRow.appendChild(hourlyTableHeader);
   }
-  dailyTotalHeader.textContent = 'Daily Location Total';
+  dailyTotalHeader.textContent = 'Total';
   tableRow.appendChild(dailyTotalHeader);
   storeTable.appendChild(tableRow);
 
