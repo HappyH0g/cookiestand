@@ -45,7 +45,6 @@ CookieStore.prototype.toHtml = function() {
     hourlyTableData.textContent = this.totalCookies[i];
     tableRow.appendChild(hourlyTableData);
   }
-  console.log(this.dailyTotalSum);
 
   totalTableData.textContent = this.dailyTotalSum;
   tableRow.appendChild(totalTableData);
@@ -56,7 +55,7 @@ var seaTacLocation = new CookieStore('SeaTac Airport', 3, 24, 1.2);
 var seattleCenterLocation = new CookieStore('Seattle Center', 11, 38, 3.7);
 var capitolHillLocation = new CookieStore('Capitol Hill', 20, 38, 2.3);
 var alkiLocation = new CookieStore('Alki', 2, 16, 4.6);
-
+var storeLocations = [pikeLocation, seaTacLocation, seattleCenterLocation, capitolHillLocation, alkiLocation];
 
 function renderHeaderRow() {
   var hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
@@ -90,16 +89,43 @@ function renderFooterRow() {
   storeTable.appendChild(tableRow);
 
 }
-renderHeaderRow();
 
-pikeLocation.toHtml();
+function renderToHtml() {
+  for (var i = 0; i < storeLocations.length; i++) {
+    storeLocations[i].toHtml();
+  }
+};
+
+
+renderHeaderRow();
+renderToHtml();
+
+/*pikeLocation.toHtml();
 seaTacLocation.toHtml();
 seattleCenterLocation.toHtml();
 capitolHillLocation.toHtml();
-alkiLocation.toHtml();
+alkiLocation.toHtml();*/
 
 renderFooterRow();
 
+var storeDetails = document.getElementById('store_details');
+
+storeDetails.addEventListener('submit', handleSubmit);
+
+function handleSubmit(event) {
+  event.preventDefault();
+  var storeLocation = document.getElementById('store_location').value;
+  var minCustomers = document.getElementById('min_customers').value;
+  var maxCustomers = document.getElementById('max_customers').value;
+  var avgCookiesSold = document.getElementById('avgcookies_sold').value;
+
+  var newStore = new CookieStore(storeLocation, parseInt(minCustomers), parseInt(maxCustomers), parseInt(avgCookiesSold));
+  console.log(newStore);
+  storeLocations.push(newStore);
+
+  newStore.toHtml();
+
+}
 /*var firstCookieStoreLocation = {
   name: '1st and Pike',
   minCustomers: 23,
