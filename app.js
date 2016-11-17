@@ -45,6 +45,7 @@ CookieStore.prototype.toHtml = function() {
     hourlyTableData.textContent = this.totalCookies[i];
     tableRow.appendChild(hourlyTableData);
   }
+
   totalTableData.textContent = this.dailyTotalSum;
   tableRow.appendChild(totalTableData);
   storeTable.appendChild(tableRow);
@@ -71,7 +72,7 @@ function renderHeaderRow() {
     hourlyTableHeader.textContent = hours[i];
     tableRow.appendChild(hourlyTableHeader);
   }
-  dailyTotalHeader.textContent = 'Daily Location Total';
+  dailyTotalHeader.textContent = 'Total';
   tableRow.appendChild(dailyTotalHeader);
   storeTable.appendChild(tableRow);
 
