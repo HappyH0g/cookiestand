@@ -31,11 +31,6 @@ CookieStore.prototype.dailyTotalCount = function() {
   this.dailyTotalSum = total;
 };
 
-CookieStore.prototype.hourlyTotalCount = function() {
-  for (var i = 0; i < this.hours.length; i++) {
-
-  }
-};
 
 CookieStore.prototype.toHtml = function() {
   this.perHourBought();
@@ -70,8 +65,8 @@ var storeLocations = [pikeLocation, seaTacLocation, seattleCenterLocation, capit
 
 function renderHeaderRow() {
   var hours = ['6am', '7am', '8am', '9am', '10am', '11am',
-                '12pm', '1pm', '2pm', '3pm', '4pm', '5pm',
-                '6pm', '7pm', '8pm'];
+    '12pm', '1pm', '2pm', '3pm', '4pm', '5pm',
+    '6pm', '7pm', '8pm'];
   var blankTableHeader = document.createElement('th');
   var storeTable = document.getElementById('table_area');
   var tableRow = document.createElement('tr');
@@ -100,7 +95,21 @@ function renderFooterRow() {
   //totalTableFooter.textContent = ('Total');
   //tableRow.appendChild(totalTableFooter);
   storeTable.appendChild(tableRow);
+
 }
+function hourlyTotalCount() {
+  total = 0;
+  total2 = 0;
+  for (var i = 0; i < storeLocations[0].totalCookies.length; i++) {
+    for (var j = 0; j < storeLocations.length; j++) {
+      total += storeLocations[i].totalCookies[j];
+    }
+    total2 += storeLocations[i].totalCookies[j];
+  }
+  console.log('innerloop', total, total2);
+  console.log('outerloop', total, total2);
+};
+hourlyTotalCount();
 
 function renderToHtml() {
   for (var i = 0; i < storeLocations.length; i++) {
