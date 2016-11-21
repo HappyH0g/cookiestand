@@ -87,29 +87,33 @@ function renderHeaderRow() {
 };
 
 function renderFooterRow() {
+  hourlyTotalCount();
   var blankTableFooter = document.createElement('tr');
   var storeTable = document.getElementById('table_area');
   var tableRow = document.createElement('tr');
+  var totalTableFooter = document.createElement('th');
 
-  tableRow.appendChild(blankTableFooter);
-  //totalTableFooter.textContent = ('Total');
-  //tableRow.appendChild(totalTableFooter);
+  totalTableFooter.textContent = ('Total');
+  tableRow.appendChild(totalTableFooter);
   storeTable.appendChild(tableRow);
 
-}
-function hourlyTotalCount() {
-  total = 0;
-  total2 = 0;
-  for (var i = 0; i < storeLocations[0].totalCookies.length; i++) {
-    for (var j = 0; j < storeLocations.length; j++) {
-      total += storeLocations[i].totalCookies[j];
+
+  function hourlyTotalCount() {
+    var grandTotal = 0;
+    var totalsArray = [];
+    var hoursTotal;
+    for (var i = 0; i < storeLocations[0].totalCookies.length; i++) {
+      for (var j = 0; j < storeLocations.length; j++) {
+        hoursTotal = storeLocations[j].totalCookies[i];
+        totalsArray.push(hoursTotal);
+        grandTotal += hoursTotal;
+      }
     }
-    total2 += storeLocations[i].totalCookies[j];
+    console.log('hourlycount', grandTotal, totalsArray);
   }
-  console.log('innerloop', total, total2);
-  console.log('outerloop', total, total2);
 };
-hourlyTotalCount();
+//hourlyTotalCount();
+//console.log('outerloop', grandTotal);
 
 function renderToHtml() {
   for (var i = 0; i < storeLocations.length; i++) {
