@@ -1,3 +1,35 @@
 html {
   background-color: pink;
 }
+
+b {
+  font-family: Tangerine, serif;
+  font-size: 40px;
+  color: purple;
+}
+
+body {
+  font-family: Georgia;
+  color: brown;
+}
+
+table {
+  font-family: Verdana;
+  background-color: violet;
+}
+
+#navbar li {
+  text-align: center;
+
+}
+
+.sub_banner {
+  display: inline;
+  text-align: center;
+  width: 150px;
+  height: auto;
+}
+
+.featured_banner {
+  width: 150px;
+}
